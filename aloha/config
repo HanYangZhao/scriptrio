@@ -1,0 +1,13 @@
+const appIoTPrefix = "https://eappiot-api.sensbysigma.com";
+const clientUrlPrefix = appIoTPrefix + "/clientapi/v1"; // Client API URL prefix
+
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzIjoiMjAxOS0wMy0yMlQxOToyNzo0MC4wNDMrMDA6MDAiLCJleHAiOjE1NTMyODI4NjAsIm5iZiI6LTYyMTM1NTk2ODAwLCJpYXQiOi02MjEzNTU5NjgwMCwibmFtZSI6ImFkbWluIiwidG9rZW5UeXBlIjoiYWNjZXNzVG9rZW4iLCJpc3N1ZWQiOiIwMDAxLTAxLTAxVDAwOjAwOjAwKzAwOjAwIiwidXNlcklkIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIn0=.6HLL9iMWWQQZ7Fi6iv0WnVqAMVXWb/x0QxdNMQYg7uo=";// Default API key
+
+const devicenetwork = "24369e69-f3ac-4132-a5b2-52d54291c743";
+const adminToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzIjoiMjAxOS0wMy0yMlQxOToyNzo0MC4wNDMrMDA6MDAiLCJleHAiOjE1NTMyODI4NjAsIm5iZiI6LTYyMTM1NTk2ODAwLCJpYXQiOi02MjEzNTU5NjgwMCwibmFtZSI6ImFkbWluIiwidG9rZW5UeXBlIjoiYWNjZXNzVG9rZW4iLCJpc3N1ZWQiOiIwMDAxLTAxLTAxVDAwOjAwOjAwKzAwOjAwIiwidXNlcklkIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIn0=.6HLL9iMWWQQZ7Fi6iv0WnVqAMVXWb/x0QxdNMQYg7uo="; // Default admin API key
+
+const errorCodeList = {
+    "missingParameter" : "MISSING_PARAMETER",
+    "invalidAction": "INVALID_ACTION",
+    "notFound": "ENTITY_NOT_FOUND"
+};
