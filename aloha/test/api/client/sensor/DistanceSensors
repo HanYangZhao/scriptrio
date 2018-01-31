@@ -1,0 +1,47 @@
+var pubsub = require("pubsub");
+var clientModule = require("../../../../client");
+var sensor = require("../../../../clientapi/sensorManager");
+var client = new clientModule.Client({}); 
+var formattedData = [];
+var sensorManager = new sensor.SensorManager({
+    "client": client
+});
+
+ var XSensorId = "e451a094-eb05-428d-90f4-b63f4e07535b";
+ var YSensorId = "72362cfa-9d86-46fc-9beb-f4f74ab89f7b"; 
+ var ZSensorId = "5423f965-5711-4789-97dd-3097f76743c6"; 
+
+var Xsensor = sensorManager.getSensor({
+    "Id": XSensorId
+});
+
+var Ysensor = sensorManager.getSensor({
+    "Id": YSensorId
+});
+
+var Zsensor = sensorManager.getSensor({
+    "Id": ZSensorId
+});
+
+var Xacceleration = Xsensor.listMeasurements();
+var Yacceleration = Ysensor.listMeasurements();
+//var Zacceleration = Zsensor.listMeasurements();
+Xacceleration.forEach(function(row, ind){
+    if (ind % 10 == 0){
+        try{
+            formattedData.push({
+                "time":row.t,
+                "front":row.m[0],
+                "left":Yacceleration[ind].m[0]
+                //"right":Zacceleration[ind].m[0]
+            });
+        }catch (ex){}
+    }
+});
+publish("data", {"id": "distance", "result": formattedData});
+return formattedData;
+
+function dateFormatter(timestamp) {
+  var date = new Date(timestamp);
+  return date.getTime();
+}

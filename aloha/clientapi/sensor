@@ -53,7 +53,8 @@ Sensor.prototype.listMeasurementsByResolution = function(params) {
 Sensor.prototype.listMeasurements = function() {
     var requestParams  = {
         url: config.clientUrlPrefix + "/sensors/"+ this.id + "/measurements",
-        method: "GET"
+        method: "GET",
+        timeout: "30000"
     }
 
     var data = this.client.callApi(requestParams);

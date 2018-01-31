@@ -1,0 +1,17 @@
+//var data = JSON.parse(request.body)
+var pubsub = require("pubsub");
+var front = request.parameters['front']
+var left = request.parameters['left']
+var right = request.parameters['right']
+publish("data", {"id": "gaugefront", "result": front});
+publish("data", {"id": "gaugeleft", "result": left});
+publish("data", {"id": "gaugeright", "result": right});
+//publish("data", {"id": "liveacc", "result": formattedData});
+
+
+function dateFormatter() {
+  var date = new Date();
+  return date.getTime();
+}
+
+return "done" 

@@ -1,0 +1,49 @@
+var pubsub = require("pubsub");
+var clientModule = require("../../../../client");
+var sensor = require("../../../../clientapi/sensorManager");
+var client = new clientModule.Client({}); 
+var formattedData = [];
+var sensorManager = new sensor.SensorManager({
+    "client": client
+});
+
+ var XSensorId = "4a185598-285e-4d57-8e3b-0c9528986e71";
+ var YSensorId = "56abc354-6b52-46e5-ad9d-5886fee50817";
+ var ZsensorId = "8ddce092-12d3-425c-b46d-fa2586683534";
+
+var Xsensor = sensorManager.getSensor({
+    "Id": XSensorId
+});
+
+
+var Ysensor = sensorManager.getSensor({
+    "Id": YSensorId
+});
+var Zsensor = sensorManager.getSensor({
+    "Id": ZsensorId
+});
+
+var Xacceleration = Xsensor.listMeasurements();
+var Yacceleration = Ysensor.listMeasurements();
+//var Zacceleration = Zsensor.listMeasurements();
+Xacceleration.forEach(function(row, ind){
+    if(ind % 10 == 0){
+    try{
+        formattedData.push({
+            "time":row.t,
+            "x":row.m[0],
+            "y":Yacceleration[ind].m[0]
+            //"z":Zacceleration[ind].m[0]
+        });
+    }catch (ex){}
+        
+    }
+
+});
+publish("data", {"id": "accelerometer", "result": formattedData});
+return formattedData;
+
+function dateFormatter(timestamp) {
+  var date = new Date(timestamp);
+  return date.getTime();
+}

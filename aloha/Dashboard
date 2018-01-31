@@ -1,0 +1,752 @@
+<html ng-app="myApp">
+<head>
+
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="//use.fontawesome.com/3d61d6959e.js"></script>
+
+    <link rel="stylesheet" href="//www.scriptr.io/lib/UIComponents/build/ide/css//components.min.css">
+    
+    <script src="//maps.google.com/maps/api/js?key=AIzaSyBcPYghFh_BXz4dDz-TXTHbU2iV3Wbf57I&libraries=drawing,visualization"></script>
+    <script src="//www.scriptr.io/lib/UIComponents/build/ide/js/template_resources.min.js"></script>
+    
+</head> 
+  
+<script>
+
+(function() {  
+   $.urlParam = function(name){
+	     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+	     if (results==null){
+	         return null;
+	     }else{
+	         return results[1] || 0;
+	     }
+	}
+
+	$.getUrlVars = function() {
+		var vars = [], hash;
+		var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+		for(var i = 0; i < hashes.length; i++)
+		{
+			hash = hashes[i].split('=');
+			vars.push(hash[0]);
+			vars[hash[0]] = hash[1];
+		}
+		return vars;
+	}
+	  
+
+      
+    var underscore = angular.module('underscore', []);
+		underscore.factory('_', ['$window', function($window) {		
+  		return $window._; // assumes underscore has already been loaded on the page		
+	}]);
+    
+
+    var wssConfig = ["wsClientProvider",function (wsClientProvider) {
+   	 	wsClientProvider.setBaseUrl("wss://" + window.location.host + "/");   	 
+        wsClientProvider.setToken($.urlParam("auth_token"));
+        wsClientProvider.setPublishChannel("data");
+        wsClientProvider.setSubscribeChannel("data");
+    }];
+
+    var httpsConfig = ["httpClientProvider",function (httpClientProvider) {
+   	  httpClientProvider.setBaseUrl("https://" + window.location.host);
+      httpClientProvider.setToken($.urlParam("auth_token"));
+    }]
+
+     var myApp= angular.module("myApp", ["underscore" , "WsClient", "HttpClient", "Chart", 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Message', 'Map', 'Grid', 'toggle-switch', 'Slider', 'Button', 'IFrame', 'Accelerometer'])
+     
+     angular.module('myApp').run(cachedTemplates);  
+      
+     angular.module('myApp').config(wssConfig);
+     angular.module('myApp').config(httpsConfig);
+     
+     myApp.config(function($interpolateProvider, $locationProvider) {
+        $interpolateProvider.startSymbol('{[{');
+        $interpolateProvider.endSymbol('}]}');
+        $locationProvider.html5Mode({
+          enabled: true,
+          requireBase: false
+        });
+     });
+  
+  
+     myApp.controller('RootCtrl', function($scope, $interpolate, $location) {
+       var vm = this;
+       vm.gridsterOptions = {
+          pushing: false,
+          
+          minRows: 1, // the minimum height of the grid, in rows
+          maxRows: 100,
+          columns: 5, // the width of the grid, in columns
+          colWidth: 'auto', // can be an integer or 'auto'.  'auto' uses the pixel width of the element divided by 'columns'
+          rowHeight: 'match', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
+          margins: [10, 10], // the pixel distance between each widget
+          defaultSizeX: 2, // the default width of a gridster item, if not specifed
+          defaultSizeY: 1, // the default height of a gridster item, if not specified
+          mobileBreakPoint: 1024, // if the screen is not wider that this, remove the grid layout and stack the items
+          minColumns: 1,
+          resizable: {
+            enabled: false
+          },
+          draggable: {
+             enabled: false
+          }
+       };
+       
+        vm.init = function() {
+        }
+                vm.lineFormatData1 = function(data){
+                  return data;
+                }
+                vm.lineFormatData2 = function(data){
+                  return data;
+                }
+                vm.lineFormatData3 = function(data){
+                  return data;
+                }
+                vm.gaugeFormatData4 = function(data){
+                  return data;
+                }
+                vm.gaugeFormatData5 = function(data){
+                  return data;
+                }
+                vm.gaugeFormatData6 = function(data){
+                  return data;
+                }
+                vm.gaugeFormatData7 = function(data){
+                  return data;
+                }
+                vm.gaugeFormatData8 = function(data){
+                  return data;
+                }
+                vm.gaugeFormatData9 = function(data){
+                  return data;
+                }
+                vm.gaugeFormatData10 = function(data){
+                  return data;
+                }
+                vm.gaugeFormatData11 = function(data){
+                  return data;
+                }
+                vm.mapFormatData12 = function(data){
+                  return data;
+                }
+                vm.toggleSwitchFormatData19 = function(data){
+                  return data;
+                }
+                vm.gridFormatData24 = function(data){
+                  return data;
+                }
+     });
+        	
+})();
+  
+</script>
+
+    <body>
+      <div ng-controller="RootCtrl as vm" ng-init="vm.init();"> 
+		<div gridster="vm.gridsterOptions">
+          <ul>
+                <li class="myItem" gridster-item='{sizeX: 2, sizeY: 2, col: 2 , row: 1 }'>
+                    <div class="box">
+                        <div class="box-content">
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Distance Sensors" class="box-label">Distance Sensors</div>
+                          <div  style="height: calc(100% - 30px)" > <scriptr-chart
+										type='line'
+										boxLabel='Distance Sensors'
+										xkey='time'
+										ykeys='["front", "left","right"]'
+										labels='["Front Distance", "Left Distance", "Right Distance"]'
+										colors='["#FCC717","#38B9D6","#f00"]'
+										transport='wss'
+										msg-tag='distance'
+										data=''
+										grid-text-family='Source Sans Pro'
+										line-width='2'
+										point-size='2'
+										point-stroke-colors='["#fff"]'
+										ymax='auto'
+										ymin='auto 0'
+										smooth='true'
+										hide-hover='false'
+										parse-time='true'
+										xlabels='auto'
+										xlabel-angle='0'
+										goal-stroke-width='1'
+										goal-line-colors='["#666633","#999966","#cc6666","#663333"]'
+										event-stroke-width='1'
+										event-line-colors='["#005a04","#ccffbb","#3a5f0b","#005502"]'
+										axes='true'
+										grid='true'
+										grid-text-color='#888'
+										grid-text-size='12'
+										grid-text-weight='normal'
+										http-method='GET'
+										point-fill-colors='[null]'
+										goals='[null]'
+										events='[null]'
+										api='aloha/test/api/client/sensor/DistanceSensors'
+                                  		on-format-data='vm.lineFormatData1'
+                           ></scriptr-chart> </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="myItem" gridster-item='{sizeX: 2, sizeY: 2, col: 1 , row: 3 }'>
+                    <div class="box">
+                        <div class="box-content">
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Accelerometer" class="box-label">Accelerometer</div>
+                          <div  style="height: calc(100% - 30px)" > <scriptr-chart
+										type='line'
+										boxLabel='Accelerometer'
+										xkey='time'
+										ykeys='["x", "y","z"]'
+										labels='["x", "y","z"]'
+										colors='["#1ed851","#040606","#f00"]'
+										transport='wss'
+										msg-tag='accelerometer'
+										data='[{"y": 2006, "a": 2, "b": 3 }, { "y": 2007, "a": 82, "b": 68 }, { "y": 2009, "a": 70, "b": 99 }, { "y":2010, "a": 30, "b": 64 }, { "y": 2011, "a": 72, "b":100 }, { "y": 2012, "a": 81, "b": 81 }, { "y": 2013,"a": 52, "b": 39 } ]'
+										grid-text-family='Source Sans Pro'
+										line-width='1'
+										point-size='2'
+										point-stroke-colors='["#fff"]'
+										ymax='auto'
+										ymin='auto 0'
+										smooth='true'
+										hide-hover='false'
+										parse-time='true'
+										xlabels='auto'
+										xlabel-angle='0'
+										goal-stroke-width='1'
+										goal-line-colors='["#666633","#999966","#cc6666","#663333"]'
+										event-stroke-width='1'
+										event-line-colors='["#005a04","#ccffbb","#3a5f0b","#005502"]'
+										axes='true'
+										grid='true'
+										grid-text-color='#888'
+										grid-text-size='12'
+										grid-text-weight='normal'
+										http-method='GET'
+										point-fill-colors='[null]'
+										goals='[null]'
+										events='[null]'
+										api='aloha/test/api/client/sensor/AccelerometerSensors'
+                                  		on-format-data='vm.lineFormatData2'
+                           ></scriptr-chart> </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="myItem" gridster-item='{sizeX: 2, sizeY: 2, col: 1 , row: 5 }'>
+                    <div class="box">
+                        <div class="box-content">
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Line Chart" class="box-label">Line Chart</div>
+                          <div  style="height: calc(100% - 30px)" > <scriptr-chart
+										type='line'
+										boxLabel='Line Chart'
+										xkey='time'
+										ykeys='["temp", "humd"]'
+										labels='["Temperature", "Humidity"]'
+										colors='["#FCC717","#38B9D6"]'
+										transport='wss'
+										msg-tag='climate'
+										data='[{"y": 2006, "a": 2, "b": 3 }, { "y": 2007, "a": 82, "b": 68 }, { "y": 2009, "a": 70, "b": 99 }, { "y":2010, "a": 30, "b": 64 }, { "y": 2011, "a": 72, "b":100 }, { "y": 2012, "a": 81, "b": 81 }, { "y": 2013,"a": 52, "b": 39 } ]'
+										grid-text-family='Source Sans Pro'
+										line-width='2'
+										point-size='2'
+										point-stroke-colors='["#fff"]'
+										ymax='auto'
+										ymin='auto 0'
+										smooth='true'
+										hide-hover='false'
+										parse-time='true'
+										xlabels='auto'
+										xlabel-angle='0'
+										goal-stroke-width='1'
+										goal-line-colors='["#666633","#999966","#cc6666","#663333"]'
+										event-stroke-width='1'
+										event-line-colors='["#005a04","#ccffbb","#3a5f0b","#005502"]'
+										axes='true'
+										grid='true'
+										grid-text-color='#888'
+										grid-text-size='12'
+										grid-text-weight='normal'
+										http-method='GET'
+										point-fill-colors='[null]'
+										goals='[null]'
+										events='[null]'
+										api='aloha/test/api/client/sensor/Climate'
+                                  		on-format-data='vm.lineFormatData3'
+                           ></scriptr-chart> </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 0 , row: 0 }'>
+                    <div class="box">
+                        <div class="box-content">
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Front Distance" class="box-label">Front Distance</div>
+                          <div  style="height: calc(100% - 30px)" > <scriptr-gauge
+										transport='wss'
+										boxLabel='Front Distance'
+										msg-tag='gaugefront'
+										api='aloha/test/api/client/sensor/LiveDistance'
+										value-font-color='#999'
+										min='0'
+										max='1000'
+										hide-min-max='false'
+										hide-value='false'
+										show-inner-shadow='false'
+										custom-sectors='{"percents":"false","ranges":[{"color":"#ef2929","lo":0,"hi":20}]}'
+										shadow-size='5'
+										shadow-opacity='0.2'
+										start-animation-type='linear'
+										refresh-animation-type='linear'
+										value-font-family='Source Sans Pro'
+										value-min-font-size='12'
+										label-min-font-size='12'
+										min-label-min-font-size='12'
+										max-label-min-font-size='12'
+										gauge-width-scale='1'
+										shadow-vertical-offset='3'
+										level-colors='["#fcaf3e","#ffd28d","#8ae234"]'
+										relative-gauge-size='true'
+										no-gradient='false'
+										start-animation-time='700'
+										refresh-animation-time='700'
+										donut='false'
+										donut-start-angle='90'
+										reverse='true'
+										decimals='0'
+										format-number='false'
+										human-friendly='false'
+										human-friendly-decimal='0'
+										pointer='false'
+										counter='false'
+										http-method='GET'
+										label='cm'
+                                  		on-format-data='vm.gaugeFormatData4'
+                           ></scriptr-gauge> </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 1 , row: 0 }'>
+                    <div class="box">
+                        <div class="box-content">
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Left Distance" class="box-label">Left Distance</div>
+                          <div  style="height: calc(100% - 30px)" > <scriptr-gauge
+										transport='wss'
+										boxLabel='Left Distance'
+										msg-tag='gaugeleft'
+										api='aloha/test/api/client/sensor/LiveDistance'
+										value-font-color='#999'
+										min='0'
+										max='1000'
+										hide-min-max='false'
+										hide-value='false'
+										show-inner-shadow='false'
+										custom-sectors='{"percents":"false","ranges":[{"color":"#ef2929","lo":0,"hi":20}]}'
+										shadow-size='5'
+										shadow-opacity='0.2'
+										start-animation-type='linear'
+										refresh-animation-type='linear'
+										value-font-family='Source Sans Pro'
+										value-min-font-size='12'
+										label-min-font-size='12'
+										min-label-min-font-size='12'
+										max-label-min-font-size='12'
+										gauge-width-scale='1'
+										shadow-vertical-offset='3'
+										level-colors='["#fcaf3e","#fce94f","#8ae234"]'
+										relative-gauge-size='true'
+										no-gradient='false'
+										start-animation-time='700'
+										refresh-animation-time='700'
+										donut='false'
+										donut-start-angle='90'
+										reverse='true'
+										decimals='0'
+										format-number='false'
+										human-friendly='false'
+										human-friendly-decimal='0'
+										pointer='false'
+										counter='false'
+										http-method='GET'
+										label='cm'
+                                  		on-format-data='vm.gaugeFormatData5'
+                           ></scriptr-gauge> </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 0 , row: 1 }'>
+                    <div class="box">
+                        <div class="box-content">
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Right Distance" class="box-label">Right Distance</div>
+                          <div  style="height: calc(100% - 30px)" > <scriptr-gauge
+										transport='wss'
+										boxLabel='Right Distance'
+										msg-tag='gaugeright'
+										api='aloha/test/api/client/sensor/LiveDistance'
+										value-font-color='#999'
+										min='0'
+										max='1000'
+										hide-min-max='false'
+										hide-value='false'
+										show-inner-shadow='false'
+										custom-sectors='{"percents":"false","ranges":[{"color":"#ef2929","lo":0,"hi":20}]}'
+										shadow-size='5'
+										shadow-opacity='0.2'
+										start-animation-type='linear'
+										refresh-animation-type='linear'
+										value-font-family='Source Sans Pro'
+										value-min-font-size='12'
+										label-min-font-size='12'
+										min-label-min-font-size='12'
+										max-label-min-font-size='12'
+										gauge-width-scale='1'
+										shadow-vertical-offset='3'
+										level-colors='["#fcaf3e","#fce94f","#8ae234"]'
+										relative-gauge-size='true'
+										no-gradient='false'
+										start-animation-time='700'
+										refresh-animation-time='700'
+										donut='false'
+										donut-start-angle='90'
+										reverse='true'
+										decimals='0'
+										format-number='false'
+										human-friendly='false'
+										human-friendly-decimal='0'
+										pointer='false'
+										counter='false'
+										http-method='GET'
+										label='cm'
+                                  		on-format-data='vm.gaugeFormatData6'
+                           ></scriptr-gauge> </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 0 , row: 4 }'>
+                    <div class="box">
+                        <div class="box-content">
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Humdity" class="box-label">Humdity</div>
+                          <div  style="height: calc(100% - 30px)" > <scriptr-gauge
+										transport='wss'
+										boxLabel='Humdity'
+										msg-tag='liveHumd'
+										api='aloha/test/api/client/sensor/LiveClimate'
+										value-font-color='#999'
+										min='0'
+										max='100'
+										hide-min-max='false'
+										hide-value='false'
+										show-inner-shadow='false'
+										custom-sectors='{"percents":"false","ranges":[{}]}'
+										shadow-size='5'
+										shadow-opacity='0.2'
+										start-animation-type='linear'
+										refresh-animation-type='linear'
+										value-font-family='Source Sans Pro'
+										value-min-font-size='12'
+										label-min-font-size='12'
+										min-label-min-font-size='12'
+										max-label-min-font-size='12'
+										gauge-width-scale='1'
+										shadow-vertical-offset='3'
+										level-colors='["#a9d70b","#f9c802","#ff0000"]'
+										relative-gauge-size='true'
+										no-gradient='false'
+										start-animation-time='700'
+										refresh-animation-time='700'
+										donut='false'
+										donut-start-angle='90'
+										reverse='false'
+										decimals='0'
+										format-number='false'
+										human-friendly='false'
+										human-friendly-decimal='0'
+										pointer='false'
+										counter='false'
+										http-method='GET'
+										label='%'
+                                  		on-format-data='vm.gaugeFormatData7'
+                           ></scriptr-gauge> </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 0 , row: 2 }'>
+                    <div class="box">
+                        <div class="box-content">
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Accelerometer Y" class="box-label">Accelerometer Y</div>
+                          <div  style="height: calc(100% - 30px)" > <scriptr-gauge
+										transport='wss'
+										boxLabel='Accelerometer Y'
+										msg-tag='accy'
+										api='aloha/test/api/client/sensor/Acc'
+										value-font-color='#999'
+										min='0'
+										max='10'
+										hide-min-max='false'
+										hide-value='false'
+										show-inner-shadow='false'
+										custom-sectors='{"percents":"false","ranges":[{}]}'
+										shadow-size='5'
+										shadow-opacity='0.2'
+										start-animation-type='linear'
+										refresh-animation-type='linear'
+										value-font-family='Source Sans Pro'
+										value-min-font-size='12'
+										label-min-font-size='12'
+										min-label-min-font-size='12'
+										max-label-min-font-size='12'
+										gauge-width-scale='1'
+										shadow-vertical-offset='3'
+										level-colors='["#a9d70b","#f9c802","#ff0000"]'
+										relative-gauge-size='true'
+										no-gradient='false'
+										start-animation-time='700'
+										refresh-animation-time='700'
+										donut='false'
+										donut-start-angle='90'
+										reverse='false'
+										decimals='0'
+										format-number='false'
+										human-friendly='false'
+										human-friendly-decimal='0'
+										pointer='false'
+										counter='false'
+										http-method='GET'
+										label='g'
+                                  		on-format-data='vm.gaugeFormatData8'
+                           ></scriptr-gauge> </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 3 , row: 3 }'>
+                    <div class="box">
+                        <div class="box-content">
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Accelerometer X" class="box-label">Accelerometer X</div>
+                          <div  style="height: calc(100% - 30px)" > <scriptr-gauge
+										transport='wss'
+										boxLabel='Accelerometer X'
+										msg-tag='accx'
+										api='aloha/test/api/client/sensor/Acc'
+										value-font-color='#999'
+										min='0'
+										max='10'
+										hide-min-max='false'
+										hide-value='false'
+										show-inner-shadow='false'
+										custom-sectors='{"percents":"false","ranges":[{}]}'
+										shadow-size='5'
+										shadow-opacity='0.2'
+										start-animation-type='linear'
+										refresh-animation-type='linear'
+										value-font-family='Source Sans Pro'
+										value-min-font-size='12'
+										label-min-font-size='12'
+										min-label-min-font-size='12'
+										max-label-min-font-size='12'
+										gauge-width-scale='1'
+										shadow-vertical-offset='3'
+										level-colors='["#a9d70b","#f9c802","#ff0000"]'
+										relative-gauge-size='true'
+										no-gradient='false'
+										start-animation-time='700'
+										refresh-animation-time='700'
+										donut='false'
+										donut-start-angle='90'
+										reverse='false'
+										decimals='0'
+										format-number='false'
+										human-friendly='false'
+										human-friendly-decimal='0'
+										pointer='false'
+										counter='false'
+										http-method='GET'
+										label='g'
+                                  		on-format-data='vm.gaugeFormatData9'
+                           ></scriptr-gauge> </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 0 , row: 3 }'>
+                    <div class="box">
+                        <div class="box-content">
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Temperature" class="box-label">Temperature</div>
+                          <div  style="height: calc(100% - 30px)" > <scriptr-gauge
+										transport='wss'
+										boxLabel='Temperature'
+										msg-tag='liveTemp'
+										api='aloha/test/api/client/sensor/LiveClimate'
+										value-font-color='#999'
+										min='0'
+										max='50'
+										hide-min-max='false'
+										hide-value='false'
+										show-inner-shadow='false'
+										custom-sectors='{"percents":"false","ranges":[{}]}'
+										shadow-size='5'
+										shadow-opacity='0.2'
+										start-animation-type='linear'
+										refresh-animation-type='linear'
+										value-font-family='Source Sans Pro'
+										value-min-font-size='12'
+										label-min-font-size='12'
+										min-label-min-font-size='12'
+										max-label-min-font-size='12'
+										gauge-width-scale='1'
+										shadow-vertical-offset='3'
+										level-colors='["#a9d70b","#f9c802","#ff0000"]'
+										relative-gauge-size='true'
+										no-gradient='false'
+										start-animation-time='700'
+										refresh-animation-time='700'
+										donut='false'
+										donut-start-angle='90'
+										reverse='false'
+										decimals='0'
+										format-number='false'
+										human-friendly='false'
+										human-friendly-decimal='0'
+										pointer='false'
+										counter='false'
+										http-method='GET'
+										label='c'
+                                  		on-format-data='vm.gaugeFormatData10'
+                           ></scriptr-gauge> </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 3 , row: 4 }'>
+                    <div class="box">
+                        <div class="box-content">
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Accelerometer Z" class="box-label">Accelerometer Z</div>
+                          <div  style="height: calc(100% - 30px)" > <scriptr-gauge
+										transport='wss'
+										boxLabel='Accelerometer Z'
+										msg-tag='accz'
+										api='aloha/test/api/client/sensor/Acc'
+										value-font-color='#999'
+										min='0'
+										max='100'
+										hide-min-max='false'
+										hide-value='false'
+										show-inner-shadow='false'
+										custom-sectors='{"percents":"false","ranges":[{}]}'
+										shadow-size='5'
+										shadow-opacity='0.2'
+										start-animation-type='linear'
+										refresh-animation-type='linear'
+										value-font-family='Source Sans Pro'
+										value-min-font-size='12'
+										label-min-font-size='12'
+										min-label-min-font-size='12'
+										max-label-min-font-size='12'
+										gauge-width-scale='1'
+										shadow-vertical-offset='3'
+										level-colors='["#a9d70b","#f9c802","#ff0000"]'
+										relative-gauge-size='true'
+										no-gradient='false'
+										start-animation-time='700'
+										refresh-animation-time='700'
+										donut='false'
+										donut-start-angle='90'
+										reverse='false'
+										decimals='0'
+										format-number='false'
+										human-friendly='false'
+										human-friendly-decimal='0'
+										pointer='false'
+										counter='false'
+										http-method='GET'
+										label='g'
+                                  		on-format-data='vm.gaugeFormatData11'
+                           ></scriptr-gauge> </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="myItem" gridster-item='{sizeX: 2, sizeY: 2, col: 3 , row: 5 }'>
+                    <div class="box">
+                        <div class="box-content">
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Map" class="box-label">Map</div>
+                          <div  style="height: calc(100% - 30px)" > <scriptr-map
+										transport='wss'
+										boxLabel='Map'
+										clustered-view='true'
+										cluster-zoom='8'
+										heatmap='false'
+										bounce='true'
+										resize='false'
+										data=''
+										sources-info='{"simulator": {"label": "Carvoyant"}}'
+										msg-tag='liveLocation'
+										clustered-zoom-max='11'
+										detailed-zoom-min='0'
+										max-asset-points='100'
+										marker-info-window='true'
+										default-center='40.7053111,-74.258188'
+										path-stroke-opacity='0'
+										path-stroke-weight='1'
+										http-method='GET'
+										api='aloha/test/api/client/sensor/LiveLocation'
+                                  		on-format-data='vm.mapFormatData12'
+                           ></scriptr-map> </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 1 , row: 1 }'>
+                    <div class="box">
+                        <div class="box-content">
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Distance Alert" class="box-label">Distance Alert</div>
+                          <div  style="height: calc(100% - 30px)" > <scriptr-toggle-switch
+										boxLabel='Distance Alert'
+										switch-status='false'
+										knob-label=''
+										on-label='ON'
+										off-label='OFF'
+										on-switch-change='vm.onChange'
+										transport='wss'
+										msg-tag='distanceAlert'
+										http-method='GET'
+										type='switch-danger'
+										api='aloha/test/api/client/sensor/DistanceAlert'
+										is-disabled='true'
+                                  		on-format-data='vm.toggleSwitchFormatData19'
+                           ></scriptr-toggle-switch> </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="myItem" gridster-item='{sizeX: 2, sizeY: 1, col: 2 , row: 0 }'>
+                    <div class="box">
+                        <div class="box-content">
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Distance Alert" class="box-label">Distance Alert</div>
+                          <div  style="height: calc(100% - 30px)" > <scriptr-grid
+										columns-definition='[{headerName: "Alert Name", field: "name"},{headerName: "Status", field: "status"}]'
+										row-data='[{name: "Distance Alert", status: "ON"}]'
+										enable-sorting='true'
+										enable-delete-row='false'
+										boxLabel='Distance Alert'
+										fixed-height='false'
+										enable-add-row='false'
+										msg-tag='distanceAlert'
+										cell-editable='false'
+										enable-client-side-filter='true'
+										enable-server-side-filter='false'
+										enable-server-side-sorting='false'
+										row-model-selection='multiple'
+										pagination-page-size='5'
+										transport='wss'
+										row-model-type='pagination'
+										enable-col-resize='true'
+										api='aloha/test/api/client/sensor/DistanceAlert'
+                                  		on-format-data='vm.gridFormatData24'
+                           ></scriptr-grid> </div>
+                        </div>
+                    </div>
+                </li>
+          </ul>
+        </div>
+      </div>
+  </body>  
+</html>

@@ -1,0 +1,13 @@
+//var data = JSON.parse(request.body)
+var pubsub = require("pubsub");
+var temp = request.parameters['temp']
+var humd = request.parameters['humd']
+publish("data", {"id": "liveTemp", "result": temp});
+publish("data", {"id": "liveHumd", "result": humd});
+
+function dateFormatter() {
+  var date = new Date();
+  return date.getTime();
+}
+
+return "done"

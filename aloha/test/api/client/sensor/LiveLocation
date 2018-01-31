@@ -1,0 +1,37 @@
+var pubsub = require("pubsub");
+var lat = request.parameters['lat']
+var lon = request.parameters['lon']
+var spd = request.parameters['spd']
+var data = {
+   "253812":{
+      "550153":[
+         {
+            "lat":{
+               "value": lat
+            },
+            "long":{
+               "value": lon
+            },
+            "bounce":{
+               "value":"true"
+            },
+            "speed":{
+               "value": spd,
+               "description":"Maximum Speed Recorded (since the previous reading)"
+            },
+            "make":{
+               "value":"Volvo"
+            },
+            "model":{
+               "value":"XC90"
+            }
+         }
+      ],
+      "source":"simulator",
+      "order":[
+         "550153"
+      ]
+   }
+}
+publish("data", {"id": "liveLocation", "result": data});
+return data

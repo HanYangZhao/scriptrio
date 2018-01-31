@@ -1,0 +1,42 @@
+var pubsub = require("pubsub");
+var clientModule = require("../../../../client");
+var sensor = require("../../../../clientapi/sensorManager");
+var client = new clientModule.Client({}); 
+var formattedData = [];
+var sensorManager = new sensor.SensorManager({
+    "client": client
+});
+
+ var tempSensorId = "f6cb6a5a-c086-4f96-bc8d-506538eab5e3";
+ var humdSensorId = "1abe9245-550e-4adc-b898-1688ff7c977c";
+
+var frontSensor = sensorManager.getSensor({
+    "Id": tempSensorId
+});
+
+var leftSensor = sensorManager.getSensor({
+    "Id": humdSensorId
+});
+
+var distFront = frontSensor.listMeasurements();
+var distLeft = leftSensor.listMeasurements();
+distFront.forEach(function(row, ind){
+    if(ind % 50 == 0){
+        try{
+            formattedData.push({
+                "time":dateFormatter(row.t),
+                "temp":row.m[0],
+                "humd":distLeft[ind].m[0],
+            });
+        }catch (ex){}        
+    }
+
+});
+publish("data", {"id": "climate", "result": formattedData});
+return formattedData
+
+
+function dateFormatter(timestamp) {
+  var date = new Date(timestamp);
+  return date.getTime();
+}
