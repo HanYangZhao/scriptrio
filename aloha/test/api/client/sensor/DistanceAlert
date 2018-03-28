@@ -193,7 +193,7 @@ StateMachineImpl.prototype.constructor = StateMachineImpl
 StateMachineImpl.prototype.transitions = {
 	"start" : {
 			"NormalDistance" : {
-					"code": function() {var data ={name: "Distance Alert", status: "OFF"}
+					"code": function() {var data ={name: "Distance Alert", status: "OFF"};
 publish("data", {"id": "distanceAlert", "result": data});
 return data;},
 					"branch": "Normal"
@@ -212,7 +212,7 @@ return data;},
 	"Normal" : {
 			"Approach" : {
 					"code": function() {var pubsub = require("pubsub");
-var data = [{name: "Distance Alert", status: "ON"}]
+var data = [{name: "Distance Alert", status: "ON"}];
 publish("data", {"id": "distanceAlert", "result": data});
 return data;},
 					"branch": "Alert"
@@ -222,7 +222,7 @@ return data;},
 	"Alert" : {
 			"BackOff" : {
 					"code": function() {var pubsub = require("pubsub");
-var data = [{name: "Distance Alert", status: "OFF"}]
+var data = [{name:"Distance Alert", status: "OFF"}];
 publish("data", {"id": "distanceAlert", "result": data});
 
 return data;},

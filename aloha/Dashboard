@@ -134,10 +134,7 @@
                 vm.mapFormatData12 = function(data){
                   return data;
                 }
-                vm.toggleSwitchFormatData19 = function(data){
-                  return data;
-                }
-                vm.gridFormatData24 = function(data){
+                vm.barFormatData54 = function(data){
                   return data;
                 }
      });
@@ -150,7 +147,7 @@
       <div ng-controller="RootCtrl as vm" ng-init="vm.init();"> 
 		<div gridster="vm.gridsterOptions">
           <ul>
-                <li class="myItem" gridster-item='{sizeX: 2, sizeY: 2, col: 2 , row: 1 }'>
+                <li class="myItem" gridster-item='{sizeX: 2, sizeY: 2, col: 2 , row: 0 }'>
                     <div class="box">
                         <div class="box-content">
                           <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Distance Sensors" class="box-label">Distance Sensors</div>
@@ -194,7 +191,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="myItem" gridster-item='{sizeX: 2, sizeY: 2, col: 1 , row: 3 }'>
+                <li class="myItem" gridster-item='{sizeX: 2, sizeY: 2, col: 1 , row: 2 }'>
                     <div class="box">
                         <div class="box-content">
                           <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Accelerometer" class="box-label">Accelerometer</div>
@@ -238,7 +235,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="myItem" gridster-item='{sizeX: 2, sizeY: 2, col: 1 , row: 5 }'>
+                <li class="myItem" gridster-item='{sizeX: 2, sizeY: 2, col: 1 , row: 4 }'>
                     <div class="box">
                         <div class="box-content">
                           <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Line Chart" class="box-label">Line Chart</div>
@@ -522,7 +519,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 3 , row: 3 }'>
+                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 3 , row: 2 }'>
                     <div class="box">
                         <div class="box-content">
                           <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Accelerometer X" class="box-label">Accelerometer X</div>
@@ -618,7 +615,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 3 , row: 4 }'>
+                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 3 , row: 3 }'>
                     <div class="box">
                         <div class="box-content">
                           <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Accelerometer Z" class="box-label">Accelerometer Z</div>
@@ -666,7 +663,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="myItem" gridster-item='{sizeX: 2, sizeY: 2, col: 3 , row: 5 }'>
+                <li class="myItem" gridster-item='{sizeX: 2, sizeY: 2, col: 3 , row: 4 }'>
                     <div class="box">
                         <div class="box-content">
                           <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Map" class="box-label">Map</div>
@@ -699,49 +696,35 @@
                     <div class="box">
                         <div class="box-content">
                           <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Distance Alert" class="box-label">Distance Alert</div>
-                          <div  style="height: calc(100% - 30px)" > <scriptr-toggle-switch
+                          <div  style="height: calc(100% - 30px)" > <scriptr-chart
+										type='bar'
 										boxLabel='Distance Alert'
-										switch-status='false'
-										knob-label=''
-										on-label='ON'
-										off-label='OFF'
-										on-switch-change='vm.onChange'
+										stacked='true'
+										xkey='y'
+										ykeys='["a", "b"]'
+										labels='["Serie A", "Serie B"]'
+										colors='["#fcaf3e","#fcaf3e","#fcaf3e"]'
 										transport='wss'
 										msg-tag='distanceAlert'
+										data='[{"y":"2006","a":88,"b":20}]'
+										grid-text-family='Source Sans Pro'
+										hide-hover='always'
+										axes='false'
+										grid='false'
+										grid-text-color='#888'
+										grid-text-size='12'
+										grid-text-weight='normal'
+										parse-time='true'
+										ymax='1'
+										ymin='auto 0'
+										xlabel-angle='0'
+										goal-stroke-width='1'
+										goal-line-colors='["#666633","#999966","#cc6666","#663333"]'
 										http-method='GET'
-										type='switch-danger'
-										api='aloha/test/api/client/sensor/DistanceAlert'
-										is-disabled='true'
-                                  		on-format-data='vm.toggleSwitchFormatData19'
-                           ></scriptr-toggle-switch> </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="myItem" gridster-item='{sizeX: 2, sizeY: 1, col: 2 , row: 0 }'>
-                    <div class="box">
-                        <div class="box-content">
-                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Distance Alert" class="box-label">Distance Alert</div>
-                          <div  style="height: calc(100% - 30px)" > <scriptr-grid
-										columns-definition='[{headerName: "Alert Name", field: "name"},{headerName: "Status", field: "status"}]'
-										row-data='[{name: "Distance Alert", status: "ON"}]'
-										enable-sorting='true'
-										enable-delete-row='false'
-										boxLabel='Distance Alert'
-										fixed-height='false'
-										enable-add-row='false'
-										msg-tag='distanceAlert'
-										cell-editable='false'
-										enable-client-side-filter='true'
-										enable-server-side-filter='false'
-										enable-server-side-sorting='false'
-										row-model-selection='multiple'
-										pagination-page-size='5'
-										transport='wss'
-										row-model-type='pagination'
-										enable-col-resize='true'
-										api='aloha/test/api/client/sensor/DistanceAlert'
-                                  		on-format-data='vm.gridFormatData24'
-                           ></scriptr-grid> </div>
+										goals='[null]'
+										api='aloha/test/api/client/sensor/Alert'
+                                  		on-format-data='vm.barFormatData54'
+                           ></scriptr-chart> </div>
                         </div>
                     </div>
                 </li>

@@ -1,0 +1,35 @@
+var pubsub = require("pubsub");
+var data
+var alert = request.parameters['event']
+var distF = request.parameters['distF']
+var distR = request.parameters['distR']
+var distL = request.parameters['distL']
+var formattedData = []
+
+if(alert === "Approach"){
+    if(distF < 15){
+        formattedData.push({"y":"Front","a":1})
+    }
+    else{
+        formattedData.push({"y":"Front","a":0})
+    }
+    if(distR < 15){
+        formattedData.push({"y":"Right","a":1})
+    }
+    else{
+        formattedData.push({"y":"Right","a":0})
+    }
+    if(distL < 15){
+        formattedData.push({"y":"Left","a":1})
+    }
+    else{
+        formattedData.push({"y":"Left","a":0})
+    }
+	publish("data", {"id": "distanceAlert", "result": formattedData});
+}
+else {
+    data = [{"y":"Front","a":0},{"y":"Right","a":0},{"y":"Left","a":0}]
+	publish("data", {"id": "distanceAlert", "result": data});
+}
+
+return data

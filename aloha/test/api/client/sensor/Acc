@@ -2,7 +2,7 @@
 var pubsub = require("pubsub");
 var x = request.parameters['x']  * 100
 var y = request.parameters['y']  * 10
-var z = request.parameters['z']  
+var z = request.parameters['z']  * 10
 var formattedData = [];
 //publish("data", {"id": "gaugex", "result": "0.314"});
 
