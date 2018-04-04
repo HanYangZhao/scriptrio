@@ -98,13 +98,13 @@
        
         vm.init = function() {
         }
-                vm.lineFormatData18 = function(data){
+                vm.lineFormatData1 = function(data){
                   return data;
                 }
-                vm.lineFormatData19 = function(data){
+                vm.lineFormatData2 = function(data){
                   return data;
                 }
-                vm.lineFormatData21 = function(data){
+                vm.lineFormatData3 = function(data){
                   return data;
                 }
                 vm.gaugeFormatData4 = function(data){
@@ -186,7 +186,7 @@
 										goals='[null]'
 										events='[null]'
 										api='aloha/test/api/client/sensor/DistanceSensors_influx'
-                                  		on-format-data='vm.lineFormatData18'
+                                  		on-format-data='vm.lineFormatData1'
                            ></scriptr-chart> </div>
                         </div>
                     </div>
@@ -230,7 +230,7 @@
 										goals='[null]'
 										events='[null]'
 										api='aloha/test/api/client/sensor/AccelerometerSensors_influx'
-                                  		on-format-data='vm.lineFormatData19'
+                                  		on-format-data='vm.lineFormatData2'
                            ></scriptr-chart> </div>
                         </div>
                     </div>
@@ -274,7 +274,7 @@
 										goals='[null]'
 										events='[null]'
 										api='aloha/test/api/client/sensor/Climate_influx'
-                                  		on-format-data='vm.lineFormatData21'
+                                  		on-format-data='vm.lineFormatData3'
                            ></scriptr-chart> </div>
                         </div>
                     </div>

@@ -28,7 +28,7 @@ if(alert === "Approach"){
 	publish("data", {"id": "distanceAlert", "result": formattedData});
 }
 else {
-    data = [{"y":"Front","a":0},{"y":"Right","a":0},{"y":"Left","a":0}]
+    data = [{"y":"Left","a":0},{"y":"Front","a":0},{"y":"Right","a":0}]
 	publish("data", {"id": "distanceAlert", "result": data});
 }
 
