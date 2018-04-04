@@ -1,0 +1,34 @@
+var pubsub = require("pubsub");
+var influxDB = require("../../../../influxDB");
+var db = new influxDB.InfluxDB();
+var formattedData = [];
+
+
+xquery = "?q=SELECT \"x\" FROM \"car_data\".\"autogen\".\"accelerometers\" ORDER BY time DESC LIMIT 15";
+var Xsensor = db.query(xquery);
+var Xvalues = Xsensor["results"][0]["series"][0]["values"]
+
+yquery = "?q=SELECT \"y\" FROM \"car_data\".\"autogen\".\"accelerometers\" ORDER BY time DESC LIMIT 15";
+var Ysensor = db.query(yquery);
+var Yvalues = Ysensor["results"][0]["series"][0]["values"]
+
+zquery = "?q=SELECT \"z\" FROM \"car_data\".\"autogen\".\"accelerometers\" ORDER BY time DESC LIMIT 15";
+var Zsensor = db.query(zquery);
+var Zvalues = Zsensor["results"][0]["series"][0]["values"]
+
+Xvalues.forEach(function(row, ind){
+    try{
+        formattedData.push({
+            "time":row[0],
+            "x":row[1],
+            "y": Yvalues[ind][1],
+            "z": Zvalues[ind][1]
+        });
+    }catch (ex){
+        console.log("error")
+    }
+})
+
+publish("data", {"id": "accelerometer", "result": formattedData});
+console.log((formattedData))
+return formattedData;

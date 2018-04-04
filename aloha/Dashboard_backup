@@ -98,6 +98,15 @@
        
         vm.init = function() {
         }
+                vm.lineFormatData18 = function(data){
+                  return data;
+                }
+                vm.lineFormatData19 = function(data){
+                  return data;
+                }
+                vm.lineFormatData21 = function(data){
+                  return data;
+                }
                 vm.gaugeFormatData4 = function(data){
                   return data;
                 }
@@ -138,6 +147,138 @@
       <div ng-controller="RootCtrl as vm" ng-init="vm.init();"> 
 		<div gridster="vm.gridsterOptions">
           <ul>
+                <li class="myItem" gridster-item='{sizeX: 3, sizeY: 2, col: 2 , row: 0 }'>
+                    <div class="box">
+                        <div class="box-content">
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Distance Sensors" class="box-label">Distance Sensors</div>
+                          <div  style="height: calc(100% - 30px)" > <scriptr-chart
+										type='line'
+										boxLabel='Distance Sensors'
+										xkey='time'
+										ykeys='["front", "left","right"]'
+										labels='["Front Distance", "Left Distance", "Right Distance"]'
+										colors='["#FCC717","#38B9D6","#f00"]'
+										transport='wss'
+										msg-tag='distance'
+										data=''
+										grid-text-family='Source Sans Pro'
+										line-width='3'
+										point-size='2'
+										point-stroke-colors='["#fff"]'
+										ymax='auto'
+										ymin='auto 0'
+										smooth='true'
+										hide-hover='false'
+										parse-time='true'
+										xlabels='auto'
+										xlabel-angle='0'
+										goal-stroke-width='1'
+										goal-line-colors='["#666633","#999966","#cc6666","#663333"]'
+										event-stroke-width='1'
+										event-line-colors='["#005a04","#ccffbb","#3a5f0b","#005502"]'
+										axes='true'
+										grid='true'
+										grid-text-color='#888'
+										grid-text-size='12'
+										grid-text-weight='normal'
+										http-method='GET'
+										point-fill-colors='[null]'
+										goals='[null]'
+										events='[null]'
+										api='aloha/test/api/client/sensor/DistanceSensors_influx'
+                                  		on-format-data='vm.lineFormatData18'
+                           ></scriptr-chart> </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="myItem" gridster-item='{sizeX: 3, sizeY: 2, col: 2 , row: 2 }'>
+                    <div class="box">
+                        <div class="box-content">
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Accelerometer" class="box-label">Accelerometer</div>
+                          <div  style="height: calc(100% - 30px)" > <scriptr-chart
+										type='line'
+										boxLabel='Accelerometer'
+										xkey='time'
+										ykeys='["x", "y","z"]'
+										labels='["x", "y","z"]'
+										colors='["#1ed851","#040606","#f00"]'
+										transport='wss'
+										msg-tag='accelerometer'
+										data='[{"y": 2006, "a": 2, "b": 3 }, { "y": 2007, "a": 82, "b": 68 }, { "y": 2009, "a": 70, "b": 99 }, { "y":2010, "a": 30, "b": 64 }, { "y": 2011, "a": 72, "b":100 }, { "y": 2012, "a": 81, "b": 81 }, { "y": 2013,"a": 52, "b": 39 } ]'
+										grid-text-family='Source Sans Pro'
+										line-width='3'
+										point-size='2'
+										point-stroke-colors='["#fff"]'
+										ymax='auto'
+										ymin='auto 0'
+										smooth='true'
+										hide-hover='false'
+										parse-time='true'
+										xlabels='auto'
+										xlabel-angle='0'
+										goal-stroke-width='1'
+										goal-line-colors='["#666633","#999966","#cc6666","#663333"]'
+										event-stroke-width='1'
+										event-line-colors='["#005a04","#ccffbb","#3a5f0b","#005502"]'
+										axes='true'
+										grid='true'
+										grid-text-color='#888'
+										grid-text-size='12'
+										grid-text-weight='normal'
+										http-method='GET'
+										point-fill-colors='[null]'
+										goals='[null]'
+										events='[null]'
+										api='aloha/test/api/client/sensor/AccelerometerSensors_influx'
+                                  		on-format-data='vm.lineFormatData19'
+                           ></scriptr-chart> </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="myItem" gridster-item='{sizeX: 2, sizeY: 2, col: 1 , row: 4 }'>
+                    <div class="box">
+                        <div class="box-content">
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Climate" class="box-label">Climate</div>
+                          <div  style="height: calc(100% - 30px)" > <scriptr-chart
+										type='line'
+										boxLabel='Climate'
+										xkey='time'
+										ykeys='["temp", "humd"]'
+										labels='["Temperature", "Humidity"]'
+										colors='["#FCC717","#38B9D6"]'
+										transport='wss'
+										msg-tag='climate'
+										data='[{"y": 2006, "a": 2, "b": 3 }, { "y": 2007, "a": 82, "b": 68 }, { "y": 2009, "a": 70, "b": 99 }, { "y":2010, "a": 30, "b": 64 }, { "y": 2011, "a": 72, "b":100 }, { "y": 2012, "a": 81, "b": 81 }, { "y": 2013,"a": 52, "b": 39 } ]'
+										grid-text-family='Source Sans Pro'
+										line-width='3'
+										point-size='2'
+										point-stroke-colors='["#fff"]'
+										ymax='auto'
+										ymin='auto 0'
+										smooth='true'
+										hide-hover='false'
+										parse-time='true'
+										xlabels='auto'
+										xlabel-angle='0'
+										goal-stroke-width='1'
+										goal-line-colors='["#666633","#999966","#cc6666","#663333"]'
+										event-stroke-width='1'
+										event-line-colors='["#005a04","#ccffbb","#3a5f0b","#005502"]'
+										axes='true'
+										grid='true'
+										grid-text-color='#888'
+										grid-text-size='12'
+										grid-text-weight='normal'
+										http-method='GET'
+										point-fill-colors='[null]'
+										goals='[null]'
+										events='[null]'
+										api='aloha/test/api/client/sensor/Climate_influx'
+                                  		on-format-data='vm.lineFormatData21'
+                           ></scriptr-chart> </div>
+                        </div>
+                    </div>
+                </li>
                 <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 0 , row: 0 }'>
                     <div class="box">
                         <div class="box-content">
@@ -282,7 +423,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 4 , row: 1 }'>
+                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 0 , row: 4 }'>
                     <div class="box">
                         <div class="box-content">
                           <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Humdity" class="box-label">Humdity</div>
@@ -330,7 +471,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 2 , row: 1 }'>
+                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 0 , row: 2 }'>
                     <div class="box">
                         <div class="box-content">
                           <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Accelerometer Y" class="box-label">Accelerometer Y</div>
@@ -378,7 +519,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 2 , row: 0 }'>
+                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 0 , row: 3 }'>
                     <div class="box">
                         <div class="box-content">
                           <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Accelerometer X" class="box-label">Accelerometer X</div>
@@ -426,7 +567,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 4 , row: 0 }'>
+                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 0 , row: 5 }'>
                     <div class="box">
                         <div class="box-content">
                           <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Temperature" class="box-label">Temperature</div>
@@ -474,7 +615,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 3 , row: 0 }'>
+                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 1 , row: 2 }'>
                     <div class="box">
                         <div class="box-content">
                           <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Accelerometer Z" class="box-label">Accelerometer Z</div>
@@ -522,7 +663,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="myItem" gridster-item='{sizeX: 5, sizeY: 2, col: 0 , row: 2 }'>
+                <li class="myItem" gridster-item='{sizeX: 2, sizeY: 2, col: 3 , row: 4 }'>
                     <div class="box">
                         <div class="box-content">
                           <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Map" class="box-label">Map</div>

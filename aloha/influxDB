@@ -1,0 +1,78 @@
+var http = require("http");
+var url = 'http://www.dogeautomation.duckdns.org:58086/query'
+
+function InfluxDB(){
+    this.url = url
+}
+/**
+ * Invoke a given API. 
+ * This method can throw exceptions
+ * @method callApi
+ * @param {String} query : SQL-like query called to the influxDB
+ */
+InfluxDB.prototype.query = function(query) {
+  try {   
+     return this._query(query);
+  }catch(response) {
+      console.log(response)
+      //this._handleError(response); 
+  }
+};
+
+InfluxDB.prototype._query = function(query) {
+    
+    var params = {};
+    params.headers = {};
+    params.url = this.url + encodeURI(query) ;
+    params.method = "GET";
+    
+    
+    console.log(params.url);
+    var response = http.request(params);
+
+    console.log("Received following response  : " + JSON.stringify(response));
+    if (response.status >= "200" && response.status < "300") {
+
+        var responseBody = "";
+        if (response.body) {
+
+            try { 
+                responseBody = JSON.parse(response.body ?  response.body : {});
+            }catch(exception) {
+                responseBody = response.body;
+            } 
+        }    
+
+        if (responseBody.message) {
+            throw response;
+        }else {
+            return responseBody;
+        }
+    }else {
+        throw response;
+    }
+};
+
+InfluxDB.prototype._handleError = function(response) {
+  var errorObj = "";
+  try {    
+    errorObj = JSON.parse(response.body);
+  }catch(e) {
+    // probably not JSON, check for the reason of the error in <pre>xxx</rep>
+    var reasonStart = response.body.indexOf("<pre>");
+    if (reasonStart > -1) {
+      
+      reasonStart = reasonStart + "<pre>".length;
+      var reasonEnd = response.body.indexOf("</pre>");
+      errorObj = response.status + ": " + response.body.substring(reasonStart, reasonEnd - 1).trim();
+    }else {
+      errorObj = response.body;
+    }
+  };
+
+  throw {
+    "errorCode": "Invocation_Error",
+    "errorDetail": errorObj
+  };
+};
+  

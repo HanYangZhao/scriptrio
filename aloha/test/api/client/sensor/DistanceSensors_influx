@@ -1,0 +1,34 @@
+var pubsub = require("pubsub");
+var influxDB = require("../../../../influxDB");
+var db = new influxDB.InfluxDB();
+var formattedData = [];
+
+
+frontQuery = "?q=SELECT \"front\" FROM \"car_data\".\"autogen\".\"distance\" ORDER BY time DESC LIMIT 15";
+var frontSensor = db.query(frontQuery); 
+var frontValues = frontSensor["results"][0]["series"][0]["values"]
+
+leftQuery = "?q=SELECT \"left\" FROM \"car_data\".\"autogen\".\"distance\" ORDER BY time DESC LIMIT 15";
+var leftSensor = db.query(leftQuery);
+var leftValues = leftSensor["results"][0]["series"][0]["values"]
+
+rightQuery = "?q=SELECT \"right\" FROM \"car_data\".\"autogen\".\"distance\" ORDER BY time DESC LIMIT 15";
+var rightSensor = db.query(rightQuery);
+var rightValues = rightSensor["results"][0]["series"][0]["values"]
+
+frontValues.forEach(function(row, ind){
+    try{
+        formattedData.push({
+            "time":row[0],
+            "front":row[1],
+            "left": leftValues[ind][1],
+            "right": rightValues[ind][1]
+        });
+    }catch (ex){
+        console.log("error")
+    }
+})
+
+publish("data", {"id": "distance", "result": formattedData});
+console.log((formattedData))
+return formattedData;

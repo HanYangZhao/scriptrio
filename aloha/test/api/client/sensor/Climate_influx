@@ -1,0 +1,31 @@
+var pubsub = require("pubsub");
+var influxDB = require("../../../../influxDB");
+var db = new influxDB.InfluxDB();
+var formattedData = [];
+
+
+tempQuery = "?q=SELECT \"temperature\" FROM \"car_data\".\"autogen\".\"climate\" ORDER BY time DESC LIMIT 15";
+var tempSensor = db.query(tempQuery); 
+var tempValues = tempSensor["results"][0]["series"][0]["values"]
+
+humdQuery = "?q=SELECT \"humidity\" FROM \"car_data\".\"autogen\".\"climate\" ORDER BY time DESC LIMIT 15";
+var humdSensor = db.query(humdQuery);
+var humdValues = humdSensor["results"][0]["series"][0]["values"]
+
+
+
+tempValues.forEach(function(row, ind){
+    try{
+        formattedData.push({
+            "time":row[0],
+            "temp":row[1],
+            "humd": humdValues[ind][1]
+        });
+    }catch (ex){
+        console.log("error")
+    }
+})
+
+publish("data", {"id": "climate", "result": formattedData});
+console.log((formattedData))
+return formattedData;
